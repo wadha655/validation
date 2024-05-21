@@ -1,0 +1,225 @@
+
+   <html>
+      <head>
+      <title>Form Validation</title> 
+      </head>     
+         
+   
+   
+   <body>
+
+	 <h1>Form Validation</h1>  
+                  <form action="" name="myForm" onsubmit="return(formValidate());">
+	<p>
+    	<label> User Name:</label> <br/>
+    	<input type="text" id="userID" name="userName" onchange="return(alphaNumericCheck());"/>
+        </p>
+	
+
+	<p>
+    	<label>Password: <br/> (at least 6 characters including</br>lowercase,uppercase,symbols & numbers)</label> <br/>
+    	<input type="password" id="passID" name="passWord"  size="20" onchange="validatePassword();" />
+	</p>
+
+	<p>
+    	<label>Confirm Password:</label> <br/>
+    	<input type="password" id="confirmPassID" name="confirmPassWord"  size="20" onchange="return(confirmPassword());"/>
+	</p>
+
+	<p>
+    	<label>E-Mail:</label> <br/>
+    	<input type="text" id="emailID" name="emailAdd" onchange="return(validateEmail());"/>
+	</p>
+
+	<p>
+    	<label>Phone (10 digits):</label> <br/>
+    	<input type="text" id="phoneID" name="phoneNo" onchange="return(validatePhone());" />
+	</p>
+
+	<p>
+    	<label>Country:</label> <br/>
+    	<select id="Country"  name="country">
+        	<option value="0" selected="selected">[choose yours]</option>
+        	<option value="1">UAE</option>
+        	<option value="2">UK</option>
+        	<option value="3">USA</option>
+        	<option value="4">France</option>
+    	</select>
+	</p>
+
+	<p>
+    	<input type="submit" name="submit" value="Submit">
+	</p>
+        </form>
+   </body>
+
+
+
+
+
+
+
+     <script type='text/javascript'>
+      function formValidate() {
+      
+         if( document.myForm.userName.value == "" ) {
+            alert( "Please enter your name!" );
+            document.myForm.userName.focus() ;
+            return false;
+         }
+
+         if( document.myForm.passWord.value ==""  ) {
+            alert( "Please enter password" );
+            document.myForm.passWord.focus() ;
+            return false;
+         }
+
+         if( document.myForm.confirmPassWord.value == "" ) {
+            alert( "Please confirm your password!" );
+            document.myForm.confirmPassWord.focus() ;
+            return false;
+         }
+
+       
+         if( document.myForm.emailAdd.value == "" ) {
+            alert( "Please provide your e-mail!" );
+            document.myForm.emailAdd.focus() ;
+            return false;
+         }
+
+         if( document.myForm.phoneNo.value == "" ) {
+            
+            alert( "Please enter a phone number in the format #######." );
+            document.myForm.phoneNo.focus() ;
+            return false;
+         }
+
+         if( document.myForm.country.value == "0" ) {
+            alert( "Please enter your country!" );
+            return false;
+         }
+         alert("Form Submitted Successfully");
+         return( true );
+      }
+
+  function alphaNumericCheck(){
+      var userID = document.myForm.userName.value;
+      for(var i=0; i<userID.length; i++)
+      {
+        var ch = userID.charAt(i);
+        if(!((ch>='0' && ch<='9') || (ch>='a' && ch<='z') || (ch>='A' && ch<='Z') || (ch=='-') || (ch=='_')))
+        {
+         alert('Input should be without symbols');
+         document.myForm.userName.value="";
+         document.myForm.userName.focus() ;
+         return false;
+        }
+      }
+     return true;     
+   }
+
+   function validatePassword() {
+          var userID = document.myForm.userName.value;
+          var  password1 =document.getElementById("passID").value;
+          var upperCase =/[A-Z]/;
+          var lowerCase= /[a-z]/;
+          var num      = /[0-9]/;
+          var sym      = /[!,@,#,$,%,^,&,*,?,/]/;
+          
+          
+
+         if( userID == password1 ){
+          alert(" username should not be same password");
+           document.myForm.passID.value = "";
+          document.myForm.passID.focus() ;
+       return false;
+         }
+         else if( document.myForm.passID.value.length <6 ) {
+            alert( "password should contin at least 6 charctuer ." );
+            document.myForm.passID.value = "";
+            document.myForm.passID.focus() ;
+            return false;
+         }
+           
+          else if(!lowerCase.test(document.getElementById("passID").value)) {
+            alert( "password should contin at least one lowercase" );
+            document.myForm.passID.value = "";
+            document.myForm.passID.focus() ;
+            return false;
+            }
+
+        else if(!upperCase.test(document.getElementById("passID").value)) {
+            alert( "password should contin at least one uppercase" );
+            document.myForm.passID.value = "";
+            document.myForm.passID.focus() ;
+            return false;
+            }
+
+       else if(!num.test(document.getElementById("passID").value)) {
+            alert( "password should contin atleast one number" );
+            document.myForm.passID.value = "";
+            document.myForm.passID.focus() ;
+            return false;
+            }
+
+      else if(!sym.test(document.getElementById("passID").value)) {
+            alert( "password should contin atleast one symbol" );
+            document.myForm.passID.value = "";
+            document.myForm.passID.focus() ;
+            return false;
+            }
+         
+         return true;
+   }
+
+
+     
+   
+   
+
+  function confirmPassword(){
+      var password1 = document.myForm.passWord.value;
+      var password2 = document.myForm.confirmPassWord.value;
+       if(password1 != password2){
+         alert('Passwords do not match!');
+         document.myForm.confirmPassWord.value="";
+         document.myForm.confirmPassWord.focus() ;
+         return false;
+        }
+     return true;     
+   }
+
+
+
+
+
+
+  function validateEmail() {
+         var emailAddress = document.myForm.emailAdd.value;
+         atpos = emailAddress.indexOf("@");
+         dotpos = emailAddress.lastIndexOf(".");
+         
+         if (atpos < 1 || ( dotpos - atpos < 2 )) {
+            alert("Please enter correct email address");
+            document.myForm.emailAdd.value="";
+            document.myForm.emailAdd.focus() ;
+            return false;
+         }
+         return( true );
+      }
+ 
+
+     
+   function validatePhone() {
+         if( isNaN( document.myForm.phoneNo.value ) ||  document.myForm.phoneNo.value.length != 10 ) {
+            alert( "Please enter a phone number in the format #######." );
+            document.myForm.phoneNo.value ="";
+            document.myForm.phoneNo.focus() ;
+
+            return false;
+         }
+         return true;
+   }
+
+        </script>
+	
